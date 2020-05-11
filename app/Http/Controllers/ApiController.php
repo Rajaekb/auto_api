@@ -74,6 +74,7 @@ public function login(Request $request)
         $user = new User();
         $user->nom = $request->nom;
         $user->prenom = $request->prenom;
+        $user->user_type = $request->user_type;
         $user->nom_société = $request->nom_société;
         $user->tel = $request->tel;
         $user->tel_whatsapp = $request->tel_whatsapp;
