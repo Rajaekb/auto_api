@@ -25,11 +25,15 @@ class AnnonceController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
-        
-        
+        $annonce = new Annonce();
+        $annonce->title=$request->title;
+        $annonce->description=$request->description;
+        $annonce->type=$request->type;
+        $annonce->active=$request->active;
+        $annonce->user_id=$request->user_id;
+        $annonce->nombre_de_vue=$request->nombre_de_vue;
+        $annonce->save();
+        return $annonce;
     }
 
     /**
@@ -38,9 +42,9 @@ class AnnonceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Annonce $annonce)
+    public function show($id)
     {
-       
+       return Annonce::find($id);
     }
 
     /**
@@ -52,7 +56,15 @@ class AnnonceController extends Controller
      */
     public function update(Request $request, $id)
     {
-   
+        $annonce = Annonce::find($id);
+        $annonce->title=$request->title;
+        $annonce->description=$request->description;
+        $annonce->type=$request->type;
+        $annonce->active=$request->active;
+        $annonce->user_id=$request->user_id;
+        $annonce->nombre_de_vue=$request->nombre_de_vue;
+        $annonce->save();
+        return $annonce;
     }
 
     /**
@@ -63,7 +75,9 @@ class AnnonceController extends Controller
      */
     public function destroy($id)
     {
-        
+        $annonce = Annonce::find($id);
+        $annonce->delete();
+        return response()->json([]);
     }
 
 }
