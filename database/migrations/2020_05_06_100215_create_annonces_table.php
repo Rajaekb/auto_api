@@ -15,12 +15,32 @@ class CreateAnnoncesTable extends Migration
     {
         Schema::create('annonces', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->string('Type');
-            $table->boolean('active');
+            $table->boolean('neuf')->nullable();
+            $table->string('origine')->nullable();
+            $table->string('dedouanement')->nullable();
+            $table->string('marque')->nullable();
+            $table->string('modele')->nullable();;
+            $table->string('finition')->nullable();;
+            $table->string('année')->nullable();;
+            $table->string('mois')->nullable();;
+            $table->integer('kilometrage')->nullable();;
+            $table->string('matricule')->nullable();;
+            $table->boolean('edition_special')->nullable();;
+            $table->string('type_vehicule')->nullable();;
+            $table->integer('nbr_portes')->nullable();;
+            $table->integer('nbr_sieges')->nullable();;
+            $table->string('carburant')->nullable();;
+            $table->string('transmission')->nullable();;
+            $table->string('cylindree')->nullable();;
+            $table->integer('p_fiscal')->nullable();;
+            $table->integer('p_chevaux')->nullable();;
+            $table->integer('motorisation')->nullable();;
+            $table->integer('consomation')->nullable();;
+            $table->integer('frais_vignette')->nullable();;
+          
+            
+            
             $table->foreignId('user_id')->constrained();           
-            $table->integer('nombre_de_vue');
             $table->timestamps();
           
         });

@@ -26,12 +26,32 @@ class AnnonceController extends Controller
     public function store(Request $request)
     {
         $annonce = new Annonce();
-        $annonce->title=$request->title;
-        $annonce->description=$request->description;
-        $annonce->type=$request->type;
-        $annonce->active=$request->active;
+        $annonce->neuf=$request->neuf;
+        $annonce->origine=$request->origine;
+        $annonce->dedouanement=$request->dedouanement;
+        $annonce->marque=$request->marque;
+        $annonce->modele=$request->modele;
+        $annonce->finition=$request->finition;
+        $annonce->année=$request->année;
+        $annonce->mois=$request->mois;
+        $annonce->kilometrage=$request->kilometrage;
+        $annonce->matricule=$request->matricule;
+        $annonce->edition_special=$request->edition_special;
+        $annonce->type_vehicule=$request->type_vehicule;
+        $annonce->nbr_portes=$request->nbr_portes;
+        $annonce->nbr_sieges=$request->nbr_sieges;
+        $annonce->carburant=$request->carburant;
+        $annonce->transmission=$request->transmission;
+        $annonce->cylindree=$request->cylindree;
+        $annonce->p_fiscal=$request->p_fiscal;
+        $annonce->p_chevaux=$request->p_chevaux;
+        $annonce->motorisation=$request->motorisation;
+        $annonce->consomation=$request->consomation;
+        $annonce->frais_vignette=$request->frais_vignette;
+
+
         $annonce->user_id=$request->user_id;
-        $annonce->nombre_de_vue=$request->nombre_de_vue;
+       
         $annonce->save();
         return $annonce;
     }
@@ -57,12 +77,31 @@ class AnnonceController extends Controller
     public function update(Request $request, $id)
     {
         $annonce = Annonce::find($id);
-        $annonce->title=$request->title;
-        $annonce->description=$request->description;
-        $annonce->type=$request->type;
-        $annonce->active=$request->active;
+        $annonce->neuf=$request->neuf;
+        $annonce->origine=$request->origine;
+        $annonce->dedouanement=$request->dedouanement;
+        $annonce->marque=$request->marque;
+        $annonce->modele=$request->modele;
+        $annonce->finition=$request->finition;
+        $annonce->année=$request->année;
+        $annonce->mois=$request->mois;
+        $annonce->kilometrage=$request->kilometrage;
+        $annonce->matricule=$request->matricule;
+        $annonce->edition_special=$request->edition_special;
+        $annonce->type_vehicule=$request->type_vehicule;
+        $annonce->nbr_portes=$request->nbr_portes;
+        $annonce->nbr_sieges=$request->nbr_sieges;
+        $annonce->carburant=$request->carburant;
+        $annonce->transmission=$request->transmission;
+        $annonce->cylindree=$request->cylindree;
+        $annonce->p_fiscal=$request->p_fiscal;
+        $annonce->p_chevaux=$request->p_chevaux;
+        $annonce->motorisation=$request->motorisation;
+        $annonce->consomation=$request->consomation;
+        $annonce->frais_vignette=$request->frais_vignette;
+
+
         $annonce->user_id=$request->user_id;
-        $annonce->nombre_de_vue=$request->nombre_de_vue;
         $annonce->save();
         return $annonce;
     }

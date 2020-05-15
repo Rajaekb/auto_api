@@ -25,17 +25,19 @@ public function login(Request $request)
     {
         $input = $request->only('email', 'password');
         $token = null;
-
+        $user=null;
         if (!$token = JWTAuth::attempt($input)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid Email or Password',
             ], 401);
         }
+        $user = JWTAuth::setToken($token)->toUser();
 
         return response()->json([
             'success' => true,
             'token' => $token,
+            'data' =>  $user
         ]);
     }
 
@@ -46,6 +48,7 @@ public function login(Request $request)
      */
     public function logout(Request $request)
     {
+
         $this->validate($request, [
             'token' => 'required'
         ]);
