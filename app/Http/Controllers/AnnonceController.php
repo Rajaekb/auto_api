@@ -25,6 +25,23 @@ class AnnonceController extends Controller
      */
     public function store(Request $request)
     {
+       //Hundle file upload
+       if($request->hasFile('image')){
+        //Get filename with the extension
+        $filenameWithExt=$request->file('image')->getClientOriginalName();
+        //Get just filename
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //Get just ext
+        $extension = $request->file('image')->getClientOriginalExtension();
+        //Filename to store
+        $fileNameToStore= $filename.'_'.time().'.'.$extension;
+        //Upload Image
+        $path = $request->file('image')->storeAs('public/annonces_images', $fileNameToStore);
+    }else{
+        $fileNameToStore='noimage.jpg';
+    }
+
+
         $annonce = new Annonce();
         $annonce->neuf=$request->neuf;
         $annonce->origine=$request->origine;
@@ -38,6 +55,21 @@ class AnnonceController extends Controller
         $annonce->matricule=$request->matricule;
         $annonce->edition_special=$request->edition_special;
         $annonce->type_vehicule=$request->type_vehicule;
+        $annonce->image=$fileNameToStore;
+        
+        //upload images
+        $data=[];
+                
+        If($request->hasfile('images')){
+            foreach($request->file('images') as $img)
+            {
+                $name=$img->getClientOriginalName();
+                $img->storeAs('public/annonces_images', $name);  
+                $data[] = $name;  
+            
+            }
+            $annonce->images=json_encode($data);   
+}
         $annonce->nbr_portes=$request->nbr_portes;
         $annonce->nbr_sieges=$request->nbr_sieges;
         $annonce->carburant=$request->carburant;

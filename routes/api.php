@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
-
+Route::apiResource('annonces', 'AnnonceController');
 Route::group(['middleware' => 'auth.jwt'], function () {
-    Route::apiResource('annonces', 'AnnonceController');
+    //Route::apiResource('annonces', 'AnnonceController');
     Route::get('logout', 'ApiController@logout');
 
   
