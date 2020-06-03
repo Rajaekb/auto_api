@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('tel')->nullable();
             $table->string('tel_whatsapp')->nullable();
             $table->string('adresse')->nullable();
+            $table->string('code_postal')->nullable();
             $table->string('ville')->nullable();
       
             $table->rememberToken();

@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
+Route::get('getpost', 'AnnonceUserController@index');
+Route::get('add_annonce', 'AnnonceUserController@store');
+Route::put('user/{id}', 'ApiController@updateUser');
 Route::apiResource('annonces', 'AnnonceController');
 Route::group(['middleware' => 'auth.jwt'], function () {
     //Route::apiResource('annonces', 'AnnonceController');

@@ -94,5 +94,27 @@ public function login(Request $request)
             'data'      =>  $user
         ], 200);
     }
+
+    public function updateUser(Request $request,$id)
+    {
+        $user=User::find($id);
+        $user->nom = $request->nom;
+        $user->prenom = $request->prenom;
+        $user->user_type = $request->user_type;
+        $user->nom_société = $request->nom_société;
+        $user->tel = $request->tel;
+        $user->tel_whatsapp = $request->tel_whatsapp;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->titre_civilité = $request->titre_civilité;
+        $user->save();
+
+
+        return response()->json([
+            'success'   =>  true,
+            'data'      =>  $user
+        ], 200);
+    }
+
     }
 

@@ -27,7 +27,6 @@ class CreateAnnoncesTable extends Migration
             $table->string('matricule')->nullable();
             $table->boolean('edition_special')->nullable();
             $table->string('type_vehicule')->nullable();
-            $table->string('image')->nullable();
             $table->longText('images')->nullable();
             $table->integer('nbr_portes')->nullable();
             $table->integer('nbr_sieges')->nullable();
@@ -39,6 +38,43 @@ class CreateAnnoncesTable extends Migration
             $table->integer('motorisation')->nullable();
             $table->integer('consomation')->nullable();
             $table->integer('frais_vignette')->nullable();
+            $table->boolean('en_etat_de_marche');
+            $table->date('date_de_vente');
+            $table->string('ville_de_vente');
+            $table->string('couleurs_exterieure')->nullable();
+            $table->string('design_interieur')->nullable();
+            $table->string('couleurs_interieur')->nullable();     
+            $table->boolean('metalisee')->nullable();
+            $table->longText('systemes_assistance')->nullable();
+            $table->string('airbag')->nullable();     
+            $table->string('type_de_phare')->nullable();     
+            $table->string('faisceau_complet')->nullable();   
+            $table->string('lumiere_allumees')->nullable();   
+            $table->string('eclairage_adaptatif')->nullable();   
+            $table->string('protection_anti_vol')->nullable();
+            $table->string('control_climat')->nullable();
+            $table->string('capteur_stationnement')->nullable();     
+            $table->string('assistance_stationnement_acoustique')->nullable();     
+            $table->string('assistance_stationnement_visuel')->nullable();     
+            $table->string('siege_chauffants_electriques')->nullable();     
+            $table->string('siege_reglables_electriques')->nullable();     
+            $table->longText('autres_caracteristiques')->nullable();     
+            $table->longText('autre_equipement_confort')->nullable();
+            $table->string('multimedia')->nullable();
+            $table->string('manipulation_controle')->nullable();
+            $table->longText('connectivite_et_interfaces')->nullable();
+            $table->string('affichage_du_cockpit')->nullable();
+            $table->string('pneus')->nullable();
+            $table->string('service_de_depannage')->nullable();
+            $table->string('particularite')->nullable();
+            $table->string('attelage_remorque')->nullable();
+            $table->string('historique_vehicule')->nullable();
+            $table->integer('tva')->nullable();
+            $table->string('lien_youtube')->nullable();
+            $table->string('titre_vehicule')->nullable();
+            $table->text('description_vehicule')->nullable();
+            $table->integer('prix_vehicule')->nullable();
+            $table->boolean('prix_fixe')->nullable();
        
           
             
