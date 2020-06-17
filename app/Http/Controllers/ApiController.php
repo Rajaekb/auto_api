@@ -29,7 +29,7 @@ public function login(Request $request)
         if (!$token = JWTAuth::attempt($input)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid Email or Password',
+                'message' => 'Email ou Mot de passe est invalide',
             ], 401);
         }
         $user = JWTAuth::setToken($token)->toUser();
@@ -58,7 +58,7 @@ public function login(Request $request)
 
             return response()->json([
                 'success' => true,
-                'message' => 'User logged out successfully'
+                'message' => 'Deconnexion avec succée'
             ]);
         } catch (JWTException $exception) {
             return response()->json([
@@ -74,6 +74,7 @@ public function login(Request $request)
      */
     public function register(RegistrationFormRequest $request)
     {
+        
         $user = new User();
         $user->nom = $request->nom;
         $user->prenom = $request->prenom;

@@ -24,9 +24,19 @@ class RegistrationFormRequest extends FormRequest
     public function rules()
     {
         return [
-          
+            'tel' =>'required|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|max:10'
+            'password' => 'required|min:8|max:15'
         ];
     }
+
+    /*public function messages()
+    {
+        return [
+            'tel.unique' =>'le numero de telephone est deja existe',
+            'email.unique' => 'email deja existe',
+            'email.required' => 'email est requie',
+           
+        ];
+    }*/
 }

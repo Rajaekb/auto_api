@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Annonce;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
+
 class AnnonceController extends Controller
 {
     /**
@@ -13,9 +16,15 @@ class AnnonceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $annonce=Annonce::all();
-        return $annonce;
+    {   
+
+       /* return QueryBuilder::for(Annonce::class)
+                 ->allowedFilters('marque')
+                 ->get();*/
+                 //->toJson();
+        //->paginate(20);
+      $annonce=Annonce::all();
+       return $annonce;
     }
 
     /**
@@ -26,6 +35,8 @@ class AnnonceController extends Controller
      */
     public function store(Request $request)
     {
+    
+
        $annonce = new Annonce();
         $annonce->neuf=$request->neuf;
         $annonce->origine=$request->origine;
@@ -45,11 +56,14 @@ class AnnonceController extends Controller
         //$folder = '/storage/annonces_images/';
             foreach($request->file('images') as $img)
             {
-                $name=$img->getClientOriginalName();
-                $nameToStore=time().'_'.$name;
+                //$name=$img->getClientOriginalName();
+                //$nameToStore=time().'_'.$name;
 
-                $img->storeAs('public/annonces_images', $nameToStore);  
-                $data[] = $nameToStore;  
+               // $img->storeAs('public/annonces_images', $nameToStore); 
+               $path = $img->store('images', 'public');
+               
+              //  $data[] = $nameToStore;  
+                $data[] = $path;  
              }
             $annonce->images=json_encode($data);   
 }
@@ -70,7 +84,7 @@ class AnnonceController extends Controller
         $annonce->design_interieur=$request->design_interieur;
         $annonce->couleurs_interieur=$request->couleurs_interieur;
         $annonce->metalisee=$request->metalisee;
-        $annonce->systemes_assistance=$request->systemes_assistance;
+        $annonce->systemes_assistance=json_encode($request->system_assistance);
         $annonce->metalisee=$request->metalisee;
         $annonce->airbag=$request->airbag;
         $annonce->type_de_phare=$request->type_de_phare;
@@ -84,15 +98,15 @@ class AnnonceController extends Controller
         $annonce->assistance_stationnement_visuel=$request->assistance_stationnement_visuel;
         $annonce->siege_chauffants_electriques=$request->siege_chauffants_electriques;
         $annonce->siege_reglables_electriques=$request->siege_reglables_electriques;
-        $annonce->autres_caracteristiques=$request->autres_caracteristiques;
-        $annonce->autre_equipement_confort=$request->autre_equipement_confort;
-        $annonce->multimedia=$request->multimedia;
-        $annonce->manipulation_controle=$request->manipulation_controle;
-        $annonce->connectivite_et_interfaces=$request->connectivite_et_interfaces;
+        $annonce->autres_caracteristiques=json_encode($request->autres_caracteristiques);
+        $annonce->autre_equipement_confort=json_encode($request->autre_equipement_confort);
+        $annonce->multimedia=json_encode($request->multimedia);
+        $annonce->manipulation_controle=json_encode($request->manipulation_controle);
+        $annonce->connectivite_et_interfaces=json_encode($request->connectivite_et_interfaces);
         $annonce->affichage_du_cockpit=$request->affichage_du_cockpit;
-        $annonce->pneus=$request->pneus;
+        $annonce->pneus=json_encode($request->pneus);
         $annonce->service_de_depannage=$request->service_de_depannage;
-        $annonce->particularite=$request->particularite;
+        $annonce->particularite=json_encode($request->particularite);
         $annonce->attelage_remorque=$request->attelage_remorque;
         $annonce->historique_vehicule=$request->historique_vehicule;
         $annonce->tva=$request->tva;
@@ -102,8 +116,6 @@ class AnnonceController extends Controller
         $annonce->prix_vehicule=$request->prix_vehicule;
         $annonce->prix_fixe=$request->prix_fixe;
      
- 
-
         $annonce->user_id=$request->user_id;       
         $annonce->save();
         $user = User::find($annonce->user_id);
@@ -128,7 +140,8 @@ class AnnonceController extends Controller
      */
     public function show($id)
     {
-       return Annonce::find($id);
+      $ann=Annonce::find($id);
+       return response()->json(['annonce'=>$ann]);
     }
 
     /**
@@ -163,8 +176,6 @@ class AnnonceController extends Controller
         $annonce->motorisation=$request->motorisation;
         $annonce->consomation=$request->consomation;
         $annonce->frais_vignette=$request->frais_vignette;
-
-
         $annonce->user_id=$request->user_id;
         $annonce->save();
         return $annonce;
@@ -181,6 +192,25 @@ class AnnonceController extends Controller
         $annonce = Annonce::find($id);
         $annonce->delete();
         return response()->json([]);
+    }
+    
+    public function search(Request $request)
+    {
+        $marque=$request->marque;
+        $modele=$request->modele;
+    //return Annonce::filter($request->all())->get();
+
+        $query = Annonce::query();
+        if($request->marque){
+            $query->where('marque', 'LIKE', "$marque");
+        }
+
+        if($request->modele){
+            $query->where('modele', 'LIKE', "$modele");
+        }
+
+        $ann=$query->get();
+        return response()->json(['annonces'=>$ann]);
     }
 
 }

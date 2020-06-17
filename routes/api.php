@@ -21,10 +21,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
-Route::get('getpost', 'AnnonceUserController@index');
-Route::get('add_annonce', 'AnnonceUserController@store');
+//Route::get('test', 'RechercheController@index');
+//Route::get('getpost', 'AnnonceUserController@index');
+//Route::get('add_annonce', 'AnnonceUserController@store');
+Route::post('annonces/search', 'AnnonceController@search');
 Route::put('user/{id}', 'ApiController@updateUser');
+Route::get('annonces/{id}', 'AnnonceController@show');
 Route::apiResource('annonces', 'AnnonceController');
+
 Route::group(['middleware' => 'auth.jwt'], function () {
     //Route::apiResource('annonces', 'AnnonceController');
     Route::get('logout', 'ApiController@logout');
