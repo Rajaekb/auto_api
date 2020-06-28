@@ -27,6 +27,10 @@ Route::post('register', 'ApiController@register');
 Route::post('annonces/search', 'AnnonceController@search');
 Route::put('user/{id}', 'ApiController@updateUser');
 Route::get('annonces/{id}', 'AnnonceController@show');
+
+Route::apiResource('marques', 'MarqueController');
+Route::apiResource('modeles', 'ModeleController');
+Route::get('modeles/show/{id}', 'ModeleController@showByMarque');
 Route::apiResource('annonces', 'AnnonceController');
 
 Route::group(['middleware' => 'auth.jwt'], function () {

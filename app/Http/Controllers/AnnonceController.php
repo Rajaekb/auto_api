@@ -1,30 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use App\Annonce;
 use App\User;
 use Illuminate\Support\Facades\DB;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\Annonce as AnnonceResource;
+use App\Http\Resources\AnnonceCollection;
+use Illuminate\Routing\UrlGenerator;
+
 
 class AnnonceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function index()
     {   
 
-       /* return QueryBuilder::for(Annonce::class)
-                 ->allowedFilters('marque')
-                 ->get();*/
-                 //->toJson();
-        //->paginate(20);
-      $annonce=Annonce::all();
-       return $annonce;
+
+     $annonce=Annonce::orderBy('id', 'desc')->get();
+    // return response()->json($annonce);
+ 
+     return AnnonceResource::collection($annonce);
+      //return new AnnonceCollection($annonce);
     }
 
     /**
@@ -41,8 +41,8 @@ class AnnonceController extends Controller
         $annonce->neuf=$request->neuf;
         $annonce->origine=$request->origine;
         $annonce->dedouanement=$request->dedouanement;
-        $annonce->marque=$request->marque;
-        $annonce->modele=$request->modele;
+        $annonce->marque_id=$request->marque_id;
+        $annonce->modele_id=$request->modele_id;
         $annonce->finition=$request->finition;
         $annonce->année=$request->année;
         $annonce->mois=$request->mois;
@@ -50,7 +50,7 @@ class AnnonceController extends Controller
         $annonce->matricule=$request->matricule;
         $annonce->edition_special=$request->edition_special;
         $annonce->type_vehicule=$request->type_vehicule;
-        //upload images
+       //upload images using storage
         $data=[];
       If($request->hasfile('images')){
         //$folder = '/storage/annonces_images/';
@@ -65,8 +65,9 @@ class AnnonceController extends Controller
               //  $data[] = $nameToStore;  
                 $data[] = $path;  
              }
-            $annonce->images=json_encode($data);   
+     $annonce->images=json_encode($data);   
 }
+
         $annonce->nbr_portes=$request->nbr_portes;
         $annonce->nbr_sieges=$request->nbr_sieges;
         $annonce->carburant=$request->carburant;
@@ -106,6 +107,8 @@ class AnnonceController extends Controller
         $annonce->affichage_du_cockpit=$request->affichage_du_cockpit;
         $annonce->pneus=json_encode($request->pneus);
         $annonce->service_de_depannage=$request->service_de_depannage;
+        $annonce->jantes=$request->jantes;
+
         $annonce->particularite=json_encode($request->particularite);
         $annonce->attelage_remorque=$request->attelage_remorque;
         $annonce->historique_vehicule=$request->historique_vehicule;
@@ -140,10 +143,19 @@ class AnnonceController extends Controller
      */
     public function show($id)
     {
-      $ann=Annonce::find($id);
-       return response()->json(['annonce'=>$ann]);
-    }
+     
+        $file_path = \Storage::url('/images/');
+        $url = asset($file_path);
+      $ann=Annonce::findOrFail($id);
+      $a=new AnnonceResource($ann);
+        return ([
+            'annonce'=>$a,
+        ]);
+    //return response()->json(['annonce'=>$ann,'user'=>$user]);
+  
 
+}
+    
     /**
      * Update the specified resource in storage.
      *
